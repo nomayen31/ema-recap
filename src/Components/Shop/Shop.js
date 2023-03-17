@@ -19,7 +19,7 @@ const Shop = () => {
         setCart(newCart)
     }
     return (
-        <div className='shop-container'>
+        <div className='shop-conta  iner'>
             <div className='products-container'>
                 {
                     products.map(product=>
