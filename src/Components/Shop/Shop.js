@@ -3,37 +3,46 @@ import { addToDb, getStoresCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import'./Shop.css'
-
 const Shop = () => {
     const[products, setProducts] =useState([]);
     const [cart, setCart]=useState([]);
-
     useEffect(()=>{
         console.log('product before fetch');
         fetch('products.json')
         .then(res=>res.json())
         .then(data=>setProducts(data))
     }, [])
+    // useEffect(()=>{
+    //     console.log('local storage first line');
+    //     const storedCart = getStoresCart();
+    //     // console.log(storedCart);
+    //     const saveCart = [];
+    //     for(const id in storedCart){
+    //        const addedProduct =products.find(product=>product.id
+    //         === id);
+    //         if (addedProduct) {
+    //             const quentaty =storedCart[id];
+    //             addedProduct.quentaty=quentaty;
+    //             console.log(addedProduct);
+    //             saveCart.push(addedProduct);
+    //         }
+    //     } 
+    //     setCart(saveCart);       
+    // },[products])
 
-    useEffect(()=>{
-        console.log('local storage first line');
-        const storedCart = getStoresCart();
-        // console.log(storedCart);
-        const saveCart = [];
+    useEffect(() =>{
+        const storedCart =getStoresCart();
+        const savedCart =[]
         for(const id in storedCart){
-           const addedProduct =products.find(product=>product.id
-            === id);
+            const addedProduct =products.find(product=>product.id ===id);
             if (addedProduct) {
                 const quentaty =storedCart[id];
                 addedProduct.quentaty=quentaty;
-                console.log(addedProduct);
-                saveCart.push(addedProduct);
+                savedCart.push(addedProduct)
             }
-        } 
-        setCart(saveCart);
-        
+        }
+        setCart(savedCart)
     },[products])
-
     const handleAddToCart = (product) =>{
         console.log(product);
         // cart.push(product)
@@ -58,5 +67,4 @@ const Shop = () => {
         </div>
     );
 };
-
 export default Shop;
